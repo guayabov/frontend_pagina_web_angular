@@ -1,60 +1,71 @@
-
 <div class="col-lg-12 col-md-12 col-sm-12">
-  <!-- Título dinámico -->
+  <!-- Título del modal que cambia dependiendo si se está viendo o editando el proyecto -->
   <h2 mat-dialog-title>{{ data.isView ? 'Proyecto' : 'Actualización de proyecto' }}</h2>
   <br>
 
   <div mat-dialog-content>
+    <!-- Si es vista, se muestra la información del proyecto en modo solo lectura -->
     <div *ngIf="data.isView; else editForm">
-      <!-- MODO VISUALIZACIÓN (solo lectura) -->
+      <!-- Sección de visualización -->
       <div class="view-mode">
         <div class="view-field">
           <label>Nombre del proyecto:</label>
-          <p>{{ data.project.nombre }}</p>
+          <p>{{ data.project.nombre }}</p> <!-- Muestra el nombre del proyecto -->
         </div>
 
         <div class="view-field">
           <label>Descripción:</label>
-          <p>{{ data.project.descripcion }}</p>
+          <p>{{ data.project.descripcion }}</p> <!-- Muestra la descripción del proyecto -->
         </div>       
       </div>
     </div>
 
+    <!-- Si no es modo visualización, se muestra el formulario para editar -->
     <ng-template #editForm>
-      <!-- MODO EDICIÓN (formulario completo) -->
+      <!-- Formulario reactivo para editar proyecto -->
       <form [formGroup]="formUpdateProjects">
         <div class="col-lg-12 col-md-12 col-sm-12 custom-margin">
+          
+          <!-- Fila del nombre del proyecto -->
           <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">
               <mat-form-field class="w-100" appearance="outline">
                 <mat-label>Nombre del proyecto</mat-label>
-                <input matInput formControlName="nombre">
+                <input matInput formControlName="nombre"> <!-- Input enlazado al formulario -->
               </mat-form-field>
             </div>      
           </div>
+
+          <!-- Fila de la descripción -->
           <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12">
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Descripción</mat-label>
-              <textarea matInput formControlName="descripcion" rows="3"></textarea>
-            </mat-form-field>
-          </div>
-        </div>     
-          <!-- Resto del formulario de edición... -->
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Descripción</mat-label>
+                <textarea matInput formControlName="descripcion" rows="3"></textarea> <!-- Textarea enlazada al formulario -->
+              </mat-form-field>
+            </div>
+          </div>     
+
+          <!-- Aquí puedes agregar más campos al formulario si lo necesitas -->
+
         </div>
       </form>
     </ng-template>
   </div>
 
+  <!-- Acciones del modal (botones) -->
   <mat-dialog-actions align="end">
+    <!-- Botón que cierra el modal. Si es modo visualización dice "Cerrar", si no, "Cancelar" -->
     <button mat-button mat-dialog-close>
       {{ data.isView ? 'Cerrar' : 'Cancelar' }}
     </button>
+
+    <!-- Botón de actualizar, visible solo si no es modo visualización -->
     <button *ngIf="!data.isView" 
             mat-button 
             cdkFocusInitial 
             (click)="updateProject()" 
-            [disabled]="formUpdateProjects.invalid">
+            [disabled]="formUpdateProjects.invalid"> <!-- Deshabilitado si el formulario no es válido -->
       Actualizar
     </button>
   </mat-dialog-actions>

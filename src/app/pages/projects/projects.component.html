@@ -1,24 +1,40 @@
+<!-- Mensaje de prueba temporal -->
 <p>projects works!</p>
+
+<!-- Sección principal del contenido -->
 <section class="content">
     <div class="content-block">
+
+        <!-- Renderizado de breadcrumbs usando *ngFor con sintaxis de Angular -->
         @for (breadscrum of breadscrums; track breadscrums) {
             <div class="block-header">
-                <!-- breadcrumb -->
-                <app-breadcrumb [title]="breadscrum.title" [items]="breadscrum.item" [active_item]="breadscrum.active">
+                <!-- Componente de breadcrumb personalizado con inputs -->
+                <app-breadcrumb 
+                    [title]="breadscrum.title" 
+                    [items]="breadscrum.item" 
+                    [active_item]="breadscrum.active">
                 </app-breadcrumb>
             </div>
         }
+
+        <!-- Contenedor de la tarjeta de búsqueda -->
         <div class="row-clearfix">
             <div class="card-search">
                 <div class="card col-md-12">
                     <div class="body">
+
+                        <!-- Formulario reactivo de búsqueda de proyectos -->
                         <form [formGroup]="projectFormSearchFilter" class="row col-md-12 col-lg-12">
+
+                            <!-- Campo para buscar por nombre del proyecto -->
                             <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 mb-3">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Nombre del proyecto</mat-label>
                                     <input matInput formControlName="name">
                                 </mat-form-field>
                             </div>
+
+                            <!-- Campo para buscar por estado del proyecto -->
                             <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 mb-3 d-flex align-items-center">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Estado</mat-label>
@@ -27,6 +43,7 @@
                             </div>
                         </form>
 
+                        <!-- Encabezado de la tabla con título y botón para crear proyecto -->
                         <div class="materialTableHeader">
                             <div class="left">
                                 <ul class="header-button-left- ms-0">
@@ -38,67 +55,87 @@
                             <div class="right">
                                 <ul class="tbl-export-btn">
                                     <li>
-                                        <button mat-flat-button color="primary" (click)="openModalCreateProject()">Crear proyecto</button>
+                                        <button mat-flat-button color="primary" (click)="openModalCreateProject()">
+                                            Crear proyecto
+                                        </button>
                                     </li>
                                 </ul>
                             </div>
                         </div>
+
+                        <!-- Contenedor de la tabla de proyectos -->
                         <div class="table-responsive">
+
+                            <!-- Tabla con columnas definidas dinámicamente -->
                             <table mat-table [dataSource]="dataSource" class="w-100">
+
+                                <!-- Spinner de carga cuando los datos se están obteniendo -->
                                 <mat-spinner *ngIf="isLoading" class="loading-spinner"></mat-spinner>
-                                
+
+                                <!-- Columna: Nombre del proyecto -->
                                 <ng-container matColumnDef="name">
                                     <th mat-header-cell *matHeaderCellDef> Nombre </th>
                                     <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
                                 </ng-container>
-                                
+
+                                <!-- Columna: Descripción del proyecto -->
                                 <ng-container matColumnDef="description">
                                     <th mat-header-cell *matHeaderCellDef> Descripción </th>
                                     <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
                                 </ng-container>
-                                
+
+                                <!-- Columna: Estado del proyecto -->
                                 <ng-container matColumnDef="status">
                                     <th mat-header-cell *matHeaderCellDef width="15%"> Estado </th>
                                     <td mat-cell *matCellDef="let element"> {{ getStatusName(element.estado) }} </td>
                                 </ng-container>
-                                
+
+                                <!-- Columna: Fecha de inicio -->
                                 <ng-container matColumnDef="startDate">
                                     <th mat-header-cell *matHeaderCellDef width="15%"> Fecha Inicio </th>
                                     <td mat-cell *matCellDef="let element"> {{element.fecha_inicio | date}} </td>
                                 </ng-container>
-                                
+
+                                <!-- Columna: Fecha de finalización -->
                                 <ng-container matColumnDef="endDate">
                                     <th mat-header-cell *matHeaderCellDef width="15%"> Fecha Fin </th>
                                     <td mat-cell *matCellDef="let element"> {{element.fecha_fin | date}} </td>
                                 </ng-container>
-                                
+
+                                <!-- Columna: Acciones con botones -->
                                 <ng-container matColumnDef="action">
                                     <th mat-header-cell *matHeaderCellDef width="10%"> Acciones </th>
                                     <td mat-cell *matCellDef="let element">
-
+                                        <!-- Ver detalles del proyecto -->
                                         <button mat-icon-button matTooltip="Ver detalles del proyecto" (click)="viewProject(element)">
                                             <mat-icon>visibility</mat-icon>
                                         </button>    
-                                            
-            
+                                        <!-- Editar proyecto -->
                                         <button mat-icon-button matTooltip="Editar proyecto" (click)="openModalUpdateProject(element)">
-                                            <mat-icon> edit </mat-icon>
+                                            <mat-icon>edit</mat-icon>
                                         </button>
-                                        
+                                        <!-- Eliminar proyecto -->
                                         <button mat-icon-button matTooltip="Eliminar proyecto" (click)="deleteProject(element.id)">
-                                            <mat-icon> delete </mat-icon>
+                                            <mat-icon>delete</mat-icon>
                                         </button>
                                     </td>
                                 </ng-container>
-                                
+
+                                <!-- Filas de encabezado y contenido -->
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             </table>
+
+                            <!-- Mensaje cuando no hay datos disponibles -->
                             <div *ngIf="dataSource && dataSource.data && dataSource.data.length === 0" class="no-data-message">
                                 No hay proyectos disponibles.
                             </div>
 
-                            <mat-paginator [pageSize]="5" showFirstLastButtons [pageSizeOptions]="[5, 10, 15]">
+                            <!-- Paginador de Angular Material -->
+                            <mat-paginator 
+                                [pageSize]="5" 
+                                showFirstLastButtons 
+                                [pageSizeOptions]="[5, 10, 15]">
                             </mat-paginator>
                         </div>
                     </div>
