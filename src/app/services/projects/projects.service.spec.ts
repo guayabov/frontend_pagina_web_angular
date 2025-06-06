@@ -1,23 +1,17 @@
-// Importación del módulo necesario para configurar pruebas unitarias en Angular.
+// Importa la clase TestBed del módulo de pruebas de Angular. TestBed es esencial para configurar y manipular el entorno de pruebas unitarias.
 import { TestBed } from '@angular/core/testing';
-
-// Importación del servicio que será probado.
+// Importa la clase ProjectsService desde el archivo './projects.service'. Este es el servicio que se va a probar en este archivo.
 import { ProjectsService } from './projects.service';
-
-describe('ProjectsService', () => { // Define el bloque de pruebas para el servicio ProjectsService.
-
-  let service: ProjectsService; // Variable que almacena la instancia del servicio.
-
-  // Configuración inicial antes de ejecutar las pruebas.
+// Define un bloque de pruebas llamado 'ProjectsService'. La función 'describe' de Jasmine se utiliza para agrupar pruebas relacionadas bajo un nombre descriptivo.
+describe('ProjectsService', () => {
+  let service: ProjectsService;
+// Define un bloque 'beforeEach'. La función dentro de 'beforeEach' se ejecuta antes de cada prueba ('it') dentro de este bloque 'describe'.
   beforeEach(() => {
-    TestBed.configureTestingModule({}); // Configura el entorno de pruebas sin dependencias adicionales.
-    service = TestBed.inject(ProjectsService); // Inyecta el servicio en el entorno de pruebas.
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(ProjectsService);
   });
-
-  // Prueba para verificar que el servicio se crea correctamente.
+// Define una prueba individual con la descripción 'should be created'. La función 'it' define una especificación de prueba.
   it('should be created', () => {
-    expect(service).toBeTruthy(); // Comprueba que la instancia del servicio es válida.
+    expect(service).toBeTruthy();
   });
-
 });
-

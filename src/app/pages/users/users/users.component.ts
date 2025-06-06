@@ -54,7 +54,7 @@ export interface User {
 })
 export class UsersComponent {
 
-  displayedColumns: string[] = [
+  displayedColumns: string[] = [  
     'name',
     'email',
     'role',
@@ -104,12 +104,13 @@ export class UsersComponent {
     this.handleUserFilterChance('name', 'email');
   }
 
- createUserFormSearchFilter() {
-    this.userFormSearchFilter = this._formBuilder.group({
-      name: [''],
-      email: ['']
-    });
-  }
+  createUserFormSearchFilter() {
+  this.userFormSearchFilter = this._formBuilder.group({
+    name: [''],
+    email: ['']
+  });
+}
+
 
   // Conversor de los roles 1 y 2 a administrador y usuarios
   getRoleName(rol_id: number): string {

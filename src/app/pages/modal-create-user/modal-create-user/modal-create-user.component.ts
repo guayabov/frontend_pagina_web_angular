@@ -1,4 +1,3 @@
-//este archivo es el componente modal para crear un nuevo usuario en la aplicacion, contiene el formulario y la logica para enviar los datos al servidor
 import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -14,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { invalid } from 'moment';
 import Swal from 'sweetalert2';
 
+ // El decorador @Component define esta clase como un componente de Angular.
 @Component({
   selector: 'app-modal-create-user',
   standalone: true,
@@ -25,21 +25,26 @@ import Swal from 'sweetalert2';
   styleUrls: ['./modal-create-user.component.scss']
 })
 
-// ModalCreateUserComponent es una clase que representa el componente de creación de usuarios
+// Exporta la clase ModalCreateUserComponent e implementa la interfaz OnInit para el ciclo de vida del componente.
 export class ModalCreateUserComponent implements OnInit {
+  // Declara una variable para el formulario reactivo de creación de usuarios. El signo '!' indica que se inicializará en el constructor.
   formCreateUser!: FormGroup;
-  administratorsValue: any[] = [];
+  // Declara un array para almacenar los valores de los administradores, probablemente para un campo de selección.
+  administratorsValues: any[] = [];
+  // Declara una variable booleana para controlar la visibilidad del campo de administrador en el formulario.
   showFieldAdministrator: boolean = false;
-
+  
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private readonly _formBuilder: FormBuilder,
     private readonly _userService: UsersService,
     private readonly _dialogRef: MatDialogRef<ModalCreateUserComponent>,
     private readonly _snackBar: MatSnackBar,
+
   )
+
   {
-    // Inicializa el formulario de creación de usuario
+    // Llama al método para crear el formulario de creación al inicializar el componente.
     this.createFormUsers();
     this.formCreateUser.controls['confirmPassword'].valueChanges.pipe(
       debounceTime(1000),
@@ -48,13 +53,11 @@ export class ModalCreateUserComponent implements OnInit {
       this.validatePassword(value);
     });
   }
-
-  // ngOnInit es un método del ciclo de vida de Angular que se ejecuta después de que el componente ha sido inicializado
+// Método del ciclo de vida de Angular que se ejecuta después de que se inicializa el constructor y se enlazan las propiedades de entrada.
   ngOnInit(): void {
     this.getAllAdministrator();
   }
-
-  // createFormUsers es un método que crea el formulario de creación de usuario
+  // Método para crear el formulario reactivo para la creación de usuarios.
   createFormUsers() {
     this.formCreateUser = this._formBuilder.group({
       nombre: ['', Validators.required],
@@ -65,36 +68,37 @@ export class ModalCreateUserComponent implements OnInit {
       administrador_id: [undefined, Validators.required]
     });
   }
-
-  // getAllAdministrator es un método que obtiene todos los administradores del sistema
+// Método para obtener la lista de todos los administradores del backend.
   getAllAdministrator() {
     this._userService.getAllAdministrator().subscribe({
       next: (res) => {
-        this.administratorsValue = res.users;
+        console.log('Respuesta administradores:', res);
+        this.administratorsValues = res.users;
       },
       error: (err) => {
         console.error(err);
       }
     });
   }
-
-  // onChangeRole es un método que se ejecuta cuando se cambia el rol del usuario
+// Método que se llama cuando cambia el valor del control 'rol_id' en el formulario.
   onChangeRole(event: any) {
-    if (event.value === '1') {
-      this.hideAdministratorField();
+    console.log('Rol seleccionado:', event.value);
+    if (event.value === '1') { 
+       this.hideAdministratorField();
+      
     } else {
-      this.showAdministratorField();
+     
+     this.showAdministratorField();
     }
   }
-
-  // onSubmit es un método que se ejecuta cuando se envía el formulario de creación de usuario
+  
+// Método que se llama cuando se envía el formulario de creación de usuarios.
   onSubmit() {
     if (this.formCreateUser.invalid) {
-      Swal.fire('Error', 'Por favor completa todos los campos', 'error');
+      Swal.fire('Error', 'Por favor completa los campos', 'error');
       return;
     }
-    
-    // Validar la contraseña
+ // Valida nuevamente la contraseña al enviar el formulario para asegurar la consistencia.
     this.validatePassword(this.formCreateUser.get('password')?.value);
     const userDataInformation = {
       nombre: this.formCreateUser.get('nombre')?.value,
@@ -143,4 +147,5 @@ export class ModalCreateUserComponent implements OnInit {
   }
   
 }
-
+    
+    

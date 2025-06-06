@@ -1,30 +1,23 @@
-// Importación de módulos necesarios para realizar pruebas unitarias en Angular.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-// Importación del componente que será probado.
 import { ModalEditUsersComponent } from './modal-edit-users.component';
-
-describe('ModalEditUsersComponent', () => { // Define el bloque de pruebas para el componente.
-
-  let component: ModalEditUsersComponent; // Almacena la instancia del componente.
-  let fixture: ComponentFixture<ModalEditUsersComponent>; // Permite la interacción con la instancia del componente.
-
-  // Configuración inicial antes de ejecutar las pruebas.
+// Define un bloque de pruebas llamado 'ModalEditUsersComponent'. La función 'describe' de Jasmine se utiliza para agrupar pruebas relacionadas con este componente.
+describe('ModalEditUsersComponent', () => {
+  let component: ModalEditUsersComponent;
+  let fixture: ComponentFixture<ModalEditUsersComponent>;
+// Define un bloque 'beforeEach'. La función dentro de 'beforeEach' se ejecuta antes de cada prueba ('it') dentro de este bloque 'describe'. El 'async' indica que puede haber operaciones asíncronas dentro.
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ // Configura el entorno de pruebas.
-      imports: [ModalEditUsersComponent] //  Posible error: Normalmente se usa "declarations" en lugar de "imports".
+    await TestBed.configureTestingModule({
+      imports: [ModalEditUsersComponent]
     })
-    .compileComponents(); // Compila los componentes antes de ejecutar las pruebas.
+    .compileComponents();
 
-    fixture = TestBed.createComponent(ModalEditUsersComponent); // Crea una instancia del componente.
-    component = fixture.componentInstance; // Asigna la instancia del componente a la variable.
-    fixture.detectChanges(); // Aplica cambios y actualiza la vista del componente.
+    fixture = TestBed.createComponent(ModalEditUsersComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   });
-
-  // Prueba para verificar que el componente se crea correctamente.
+// Define una prueba individual con la descripción 'should create'. La función 'it' define una especificación de prueba.
   it('should create', () => {
-    expect(component).toBeTruthy(); // Comprueba que la instancia del componente es válida.
+    expect(component).toBeTruthy();
   });
-
 });
-

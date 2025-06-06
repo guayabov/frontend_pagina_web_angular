@@ -1,26 +1,23 @@
 import { Component, Input } from '@angular/core';
-import { FeatherModule } from 'angular-feather'; // Módulo para iconos en Angular.
-import { RouterLink } from '@angular/router'; // Permite la navegación mediante enlaces en Angular.
+import { FeatherModule } from 'angular-feather';
+import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'app-breadcrumb', // Define el nombre con el que se usará el componente en HTML.
-    templateUrl: './breadcrumb.component.html', // Archivo que contiene la estructura visual del componente.
-    styleUrls: ['./breadcrumb.component.scss'], // Archivo donde se encuentran los estilos específicos del componente.
-    standalone: true, // Permite que el componente funcione sin necesidad de estar dentro de un módulo.
-    imports: [RouterLink, FeatherModule], // Módulos que el componente necesita para funcionar correctamente.
+    selector: 'app-breadcrumb',
+    templateUrl: './breadcrumb.component.html',
+    styleUrls: ['./breadcrumb.component.scss'],
+    standalone: true,
+    imports: [RouterLink, FeatherModule],
 })
-export class BreadcrumbComponent { // Definición de la clase principal del componente.
-
+export class BreadcrumbComponent {
   @Input()
-  title!: string; // Propiedad de entrada que define el título del breadcrumb.
-
+  title!: string;
   @Input()
-  items!: string[]; // Propiedad de entrada que recibe una lista de elementos del breadcrumb.
-
+  items!: string[];
   @Input()
-  active_item!: string; // Propiedad de entrada que indica el elemento activo del breadcrumb.
+  active_item!: string;
 
   constructor() {
-    // Constructor del componente, donde pueden inicializarse variables si es necesario.
+    //constructor
   }
 }
